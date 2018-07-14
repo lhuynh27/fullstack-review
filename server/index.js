@@ -17,7 +17,7 @@ app.post('/repos', function (req, res) {
     getReposByUsername(body, (err, data) => {
       if(err) return err;
       save(data);
-      res.send('Post Works!');
+      res.send(data);
     });
   });
 });
@@ -25,9 +25,13 @@ app.post('/repos', function (req, res) {
 // This route should send back the top 25 repos
 app.get('/repos', function (req, res) {
   top25((err, repo) => {
-  
+    if(err){
+      return err
+    } else {
+      console.log(repo);
+      res.send(repo);
+    }
   });
-  res.send('Get Request Completed!');
 });
 
 let port = 1128;
