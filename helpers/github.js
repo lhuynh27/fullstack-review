@@ -19,6 +19,7 @@ let getReposByUsername = (username, callback) => {
     if(!error) {
       var parseBody = JSON.parse(body);
       var repos = [];
+      console.log(parseBody);
       parseBody.forEach(repo => {
         var obj = {
           repo_id: repo.id,
@@ -30,7 +31,7 @@ let getReposByUsername = (username, callback) => {
       repos.push(obj);
     });
     callback(null, repos);
-    //console.log(repos, 'I AM LOCATED IN YOUR GITHUB.JS');
+    console.log(repos, Array.isArray(repos),  'I AM LOCATED IN YOUR GITHUB.JS');
     }
   }
   request(options, filterData);
