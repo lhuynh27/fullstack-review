@@ -30,7 +30,7 @@ let getReposByUsername = (username, callback) => {
       repos.push(obj);
     });
     callback(null, repos);
-    console.log(repos, Array.isArray(repos), 'I AM LOCATED IN YOUR GITHUB.JS');
+    //console.log(repos, 'I AM LOCATED IN YOUR GITHUB.JS');
     }
   }
   request(options, filterData);
