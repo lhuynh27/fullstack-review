@@ -12,13 +12,28 @@ let getReposByUsername = (username, callback) => {
     }
   };
 
-  let cb = (error, response, body) => {
+  let filterData = (error, response, body) => {
+    if(error){
+      callback(error, null);
+    }
     if(!error) {
-      var info = JSON.parse(body);
-      callback(info);
+      var parseBody = JSON.parse(body);
+      var repos = [];
+      parseBody.forEach(repo => {
+        var obj = {
+          repo_id: repo.id,
+          username: repo.owner.login,
+          repo_name: repo.name,
+          repo_url: repo.html_url,
+          forks: repo.forks
+        }
+      repos.push(obj);
+    });
+    callback(null, repos);
+    console.log(repos, Array.isArray(repos), 'I AM LOCATED IN YOUR GITHUB.JS');
     }
   }
-  request(options, cb);
+  request(options, filterData);
 };
 
 module.exports.getReposByUsername = getReposByUsername;
