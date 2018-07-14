@@ -30,11 +30,8 @@ let save = (data) => {
 
 let top25 = (callback) => {
   Repo.find({}).limit(25).sort({forks: -1 })
-  .exec((err, callback) => {
-    if(err) return err;
-    callback(Repo);      
-  });
-}
+  .exec(callback)
+};
 
 module.exports.save = save;
 module.exports.top25 = top25;
