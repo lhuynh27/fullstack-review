@@ -2,9 +2,9 @@ const express = require('express');
 let app = express();
 const getReposByUsername = require('../helpers/github.js').getReposByUsername;
 const save = require('../database/index.js').save;
+const top25 = require('../database/index.js').top25;
 
 app.use(express.static(__dirname + '/../client/dist'));
-
 
 // This route should take the github username provided
 // and get the repo information from the github API, then
@@ -14,19 +14,20 @@ app.post('/repos', function (req, res) {
   req.on('data',(chunk) => {
     body += chunk;
   }).on('end', () => {
-    getReposByUsername(body, (data) => {
-      //SEND OVER TO DATABASE
-      //USE SAVE FUNCTION HERE
-
-      res.send('Post Works!') 
+    getReposByUsername(body, (err, data) => {
+      if(err) return err;
+      save(data);
+      res.send('Post Works!');
     });
   });
 });
 
+// This route should send back the top 25 repos
 app.get('/repos', function (req, res) {
-  // TODO - your code here!
-  // This route should send back the top 25 repos
-  res.send('Get Works')
+  top25((err, repo) => {
+  
+  });
+  res.send('Get Request Completed!');
 });
 
 let port = 1128;
